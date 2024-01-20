@@ -1,0 +1,92 @@
+# MERGE-SORT, T(n)
+def merge_sort(A):
+    print("【Starting sorting", A)
+
+    # If n=1, done. O(1)
+    if len(A) <= 1:
+        print("  Finishing sorting", A, "; The result is ", A, "】")
+        return A
+
+    # Split the array into two halves
+    mid = len(A) // 2
+    left_half = A[:mid]
+    right_half = A[mid:]
+    print("  Left half is", left_half, "; Right half is", right_half )
+
+    # Recursively apply merge_sort to each half, 2*T(n/2)
+    left_half = merge_sort(left_half)
+    right_half = merge_sort(right_half)
+
+    # Merge the sorted halves, O(n)
+    print("  Merging", left_half, "and", right_half)
+    sorted_A = merge(left_half, right_half)
+
+    print("  Finishing sorting", A, "; The result is ", sorted_A, "】")
+    return sorted_A
+
+# subroutine: MERGE
+def merge(left, right):
+    result = []
+    left_index, right_index = 0, 0
+
+    # Compare elements from both halves and merge them
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] < right[right_index]:
+            result.append(left[left_index])
+            left_index += 1
+        else:
+            result.append(right[right_index])
+            right_index += 1
+
+    # Add any remaining elements from both halves
+    result.extend(left[left_index:])
+    result.extend(right[right_index:])
+
+    return result
+
+# Example usage:
+arr = [38, 27, 43, 3, 9, 82, 10]
+print("Original Array:", arr)
+
+sorted_arr = merge_sort(arr)
+print("Sorted Array:", sorted_arr)
+Original Array: [38, 27, 43, 3, 9, 82, 10]
+【Starting sorting [38, 27, 43, 3, 9, 82, 10]
+  Left half is [38, 27, 43] ; Right half is [3, 9, 82, 10]
+【Starting sorting [38, 27, 43]
+  Left half is [38] ; Right half is [27, 43]
+【Starting sorting [38]
+  Finishing sorting [38] ; The result is  [38] 】
+【Starting sorting [27, 43]
+  Left half is [27] ; Right half is [43]
+【Starting sorting [27]
+  Finishing sorting [27] ; The result is  [27] 】
+【Starting sorting [43]
+  Finishing sorting [43] ; The result is  [43] 】
+  Merging [27] and [43]
+  Finishing sorting [27, 43] ; The result is  [27, 43] 】
+  Merging [38] and [27, 43]
+  Finishing sorting [38, 27, 43] ; The result is  [27, 38, 43] 】
+【Starting sorting [3, 9, 82, 10]
+  Left half is [3, 9] ; Right half is [82, 10]
+【Starting sorting [3, 9]
+  Left half is [3] ; Right half is [9]
+【Starting sorting [3]
+  Finishing sorting [3] ; The result is  [3] 】
+【Starting sorting [9]
+  Finishing sorting [9] ; The result is  [9] 】
+  Merging [3] and [9]
+  Finishing sorting [3, 9] ; The result is  [3, 9] 】
+【Starting sorting [82, 10]
+  Left half is [82] ; Right half is [10]
+【Starting sorting [82]
+  Finishing sorting [82] ; The result is  [82] 】
+【Starting sorting [10]
+  Finishing sorting [10] ; The result is  [10] 】
+  Merging [82] and [10]
+  Finishing sorting [82, 10] ; The result is  [10, 82] 】
+  Merging [3, 9] and [10, 82]
+  Finishing sorting [3, 9, 82, 10] ; The result is  [3, 9, 10, 82] 】
+  Merging [27, 38, 43] and [3, 9, 10, 82]
+  Finishing sorting [38, 27, 43, 3, 9, 82, 10] ; The result is  [3, 9, 10, 27, 38, 43, 82] 】
+Sorted Array: [3, 9, 10, 27, 38, 43, 82]
